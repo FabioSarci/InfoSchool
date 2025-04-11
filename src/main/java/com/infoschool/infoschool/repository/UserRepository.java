@@ -9,4 +9,6 @@ import com.infoschool.infoschool.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     
     public Optional<User> findByEmail(String email);
+
+    public boolean existsByEmail(String email);
 }
