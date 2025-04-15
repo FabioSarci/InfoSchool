@@ -28,6 +28,10 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany
+    @JoinTable(
+    name = "user_courses",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses;
 }
