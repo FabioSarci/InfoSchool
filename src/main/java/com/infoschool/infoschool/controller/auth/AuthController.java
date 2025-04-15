@@ -112,9 +112,8 @@ public class AuthController {
 
         // Assegna il ruolo all'utente in base alla richiesta
         if (strRole == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            role = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            role = userRole;
         } else {
                 switch (strRole.toLowerCase()) {
                     case "admin":
@@ -123,9 +122,8 @@ public class AuthController {
                         role = adminRole;
                         break;
                     case "teacher":
-                        Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
+                        role = roleRepository.findByName(ERole.ROLE_TEACHER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        role = teacherRole;
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
