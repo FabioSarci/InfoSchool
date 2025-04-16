@@ -2,9 +2,12 @@ package com.infoschool.infoschool.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.infoschool.infoschool.dto.request.UserDtoForm;
+import com.infoschool.infoschool.dto.request.UserRegistrarionToCourseDto;
+import com.infoschool.infoschool.model.Course;
 import com.infoschool.infoschool.model.User;
 import com.infoschool.infoschool.repository.UserRepository;
 
@@ -14,11 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserService {
     
+    @Autowired
     private final UserRepository userRepository;
+    @Autowired
+    private final CourseService courseService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CourseService courseService) {
         this.userRepository = userRepository;
+        this.courseService = courseService;
     }
+
 
 
     public User addUser(UserDtoForm user) {
@@ -100,5 +108,28 @@ public class UserService {
         }
     }
 
-
+    public User registration(UserRegistrarionToCourseDto registration){
+        try {
+            Course course = courseService.getById(registration.getCourseId());
+            if(course != null) {
+                User user = userRepository.findById(registration.getUserId()).orElse(null);
+                if(user != null) {
+                    user.getCourses().add(course);
+                    course.getStudents().add(user);
+                    userRepository.save(user);
+                    courseService.edit(course);
+                    return user;
+                } else {
+                    log.warn("User not found for registration: {}", registration.getUserId());
+                    throw new RuntimeException("User not found");
+                }
+            } else {
+                log.warn("Course not found for registration: {}", registration.getCourseId());
+                throw new RuntimeException("Course not found");
+            }
+        } catch (Exception e) {
+            log.error("Error registering user: {} for course: {}", registration.getUserId(), registration.getCourseId(), e);
+            return null;
+        }
+    }
 }
