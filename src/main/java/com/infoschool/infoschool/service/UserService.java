@@ -77,5 +77,28 @@ public class UserService {
         }
     }
 
+    public User edit(UserDtoForm user) {
+        try {
+            log.info("Editing user: {}", user);
+            User existingUser = userRepository.findById(user.getUserId()).orElse(null);
+            if (existingUser != null) {
+                existingUser.setName(user.getName());
+                existingUser.setSurname(user.getSurname());
+                existingUser.setEmail(user.getEmail());
+                existingUser.setPassword(user.getPassword());
+                existingUser.setAddress(user.getAddress());
+                existingUser.setBirthDate(user.getBirthDate());
+                existingUser.setRole(user.getRole());
+                return userRepository.save(existingUser);
+            } else {
+                log.warn("User not found for editing: {}", user);
+                return null;
+            }
+        } catch (Exception e) {
+            log.error("Error editing user: {}", user, e);
+            return null;
+        }
+    }
+
 
 }

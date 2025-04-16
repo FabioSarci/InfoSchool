@@ -27,13 +27,13 @@ public class Course {
     private Long id;
 
     @Column(nullable = false)
-    private String codice;
+    private String code;
 
     @Column(nullable = false)
-    private int anno;
+    private int year;
 
-    private String nome;
-    private String descrizione;
+    private String name;
+    private String description;
 
     @ManyToMany(mappedBy = "courses")
     private List<User> students;
