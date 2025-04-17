@@ -1,5 +1,6 @@
 package com.infoschool.infoschool.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,8 +11,10 @@ public interface AttachmentTypeRepository extends JpaRepository<AttachmentType, 
 
     Optional<AttachmentType> findByName(String name);
 
-    Optional<AttachmentType> findByExtension(String extension);
+    List<AttachmentType> findByExtension(String extension);
 
-    Optional<AttachmentType> findByMimeType(String mimeType);
+    List<AttachmentType> findByMimeType(String mimeType);
+
+    Boolean existsByName(String name);
     
 }
