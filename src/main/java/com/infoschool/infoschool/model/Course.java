@@ -46,4 +46,11 @@ public class Course {
         joinColumns = @JoinColumn(name = "course_id"),
         inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private List<Subject> subjects;
+
+    @ManyToMany
+    @JoinTable(
+        name = "course_certification",
+        joinColumns = @JoinColumn(name = "course_id"),
+        inverseJoinColumns = @JoinColumn(name = "certification_id"))
+    private List<Certification> certifications;
 }
