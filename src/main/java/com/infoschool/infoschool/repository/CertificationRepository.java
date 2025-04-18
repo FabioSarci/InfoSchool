@@ -10,9 +10,5 @@ public interface CertificationRepository extends JpaRepository<Certification, Lo
 
     Optional<Certification> findByName(String name);
 
-    Optional<Certification> findByDescription(String description);
-
-    Optional<Certification> findById(Long id);
-
     boolean existsByName(String name);
 }
