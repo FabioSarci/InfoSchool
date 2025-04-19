@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,6 +24,7 @@ public class AttachmentTypeController {
     }
 
     @Operation(summary = "Aggiungi un nuovo tipo di allegato")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addAttachmentType(@RequestBody AttachmentType attachmentType) {
         try {
@@ -34,6 +36,7 @@ public class AttachmentTypeController {
     }
 
     @Operation(summary = "Ottieni un tipo di allegato per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getAttachmentTypeById(@PathVariable Long id) {
         try {
@@ -48,6 +51,7 @@ public class AttachmentTypeController {
     }
 
     @Operation(summary = "Ottieni un tipo di allegato per nome")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getAttachmentTypeByName(@PathVariable String name) {
         try {
@@ -62,6 +66,7 @@ public class AttachmentTypeController {
     }
 
     @Operation(summary = "Modifica un tipo di allegato")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> editAttachmentType(@RequestBody AttachmentType attachmentType) {
         try {
@@ -73,6 +78,7 @@ public class AttachmentTypeController {
     }
 
     @Operation(summary = "Elimina un tipo di allegato per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAttachmentTypeById(@PathVariable Long id) {
         try {

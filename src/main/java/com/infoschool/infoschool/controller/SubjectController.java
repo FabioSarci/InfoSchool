@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class SubjectController {
     }
 
     @Operation(summary = "Aggiungi una nuova materia")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addSubject(@RequestBody Subject subject) {
         try {
@@ -35,6 +37,7 @@ public class SubjectController {
     }
 
     @Operation(summary = "Modifica una materia")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> updateSubject(@RequestBody Subject subject) {
         try {
@@ -46,6 +49,7 @@ public class SubjectController {
     }
 
     @Operation(summary = "Elimina una materia per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSubjectById(@PathVariable Long id) {
         try {
@@ -57,6 +61,7 @@ public class SubjectController {
     }
 
     @Operation(summary = "Ottieni una materia per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findSubjectById(@PathVariable Long id) {
         try {
@@ -71,6 +76,7 @@ public class SubjectController {
     }
 
     @Operation(summary = "Ottieni tutte le materie")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping
     public ResponseEntity<?> findAllSubjects() {
         try {
@@ -82,6 +88,7 @@ public class SubjectController {
     }
 
     @Operation(summary = "Ottieni una materia per nome")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/name/{name}")
     public ResponseEntity<?> findSubjectByName(@PathVariable String name) {
         try {

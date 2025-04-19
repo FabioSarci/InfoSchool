@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class UserController {
     }
 
     @Operation(summary = "Aggiungi un nuovo utente")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addUser(@RequestBody UserDtoForm userDtoForm) {
         try {
@@ -38,6 +40,7 @@ public class UserController {
 
     @Operation(summary = "Modifica un utente")
     @PutMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     public ResponseEntity<?> editUser(@RequestBody UserDtoForm userDtoForm) {
         try {
             User updatedUser = userService.edit(userDtoForm);
@@ -51,6 +54,7 @@ public class UserController {
     }
 
     @Operation(summary = "Elimina un utente per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
         try {
@@ -62,6 +66,7 @@ public class UserController {
     }
 
     @Operation(summary = "Ottieni un utente per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         try {
@@ -76,6 +81,7 @@ public class UserController {
     }
 
     @Operation(summary = "Ottieni un utente per email")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/email/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
         try {
@@ -90,6 +96,7 @@ public class UserController {
     }
 
     @Operation(summary = "Registra un utente a un corso")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @PostMapping("/register")
     public ResponseEntity<?> registerUserToCourse(@RequestBody UserRegistrarionToCourseDto registrationDto) {
         try {

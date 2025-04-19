@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class CourseController {
     }
 
     @Operation(summary = "Aggiungi un nuovo corso")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addCourse(@RequestBody Course course) {
         try {
@@ -33,6 +35,7 @@ public class CourseController {
     }
 
     @Operation(summary = "Ottieni un corso per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getCourseById(@PathVariable Long id) {
         try {
@@ -47,6 +50,7 @@ public class CourseController {
     }
 
     @Operation(summary = "Ottieni un corso per nome")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getCourseByName(@PathVariable String name) {
         try {
@@ -61,6 +65,7 @@ public class CourseController {
     }
 
     @Operation(summary = "Ottieni un corso per nome e anno")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/name/{name}/year/{year}")
     public ResponseEntity<?> getCourseByNameAndYear(@PathVariable String name, @PathVariable int year) {
         try {
@@ -75,6 +80,7 @@ public class CourseController {
     }
 
     @Operation(summary = "Modifica un corso")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> editCourse(@RequestBody Course course) {
         try {
@@ -86,6 +92,7 @@ public class CourseController {
     }
 
     @Operation(summary = "Elimina un corso per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCourseById(@PathVariable Long id) {
         try {

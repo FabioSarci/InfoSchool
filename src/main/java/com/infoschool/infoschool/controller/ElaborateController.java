@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class ElaborateController {
     }
 
     @Operation(summary = "Aggiungi un nuovo elaborato")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> addElaborate(@RequestBody Elaborate elaborate) {
         try {
@@ -33,6 +35,7 @@ public class ElaborateController {
     }
 
     @Operation(summary = "Ottieni un elaborato per ID")
+    @PreAuthorize("hasRole('USER') or hasRole('TEACHER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getElaborateById(@PathVariable Long id) {
         try {
@@ -47,6 +50,7 @@ public class ElaborateController {
     }
 
     @Operation(summary = "Modifica un elaborato")
+    @PreAuthorize("hasRole('USER')")
     @PutMapping
     public ResponseEntity<?> editElaborate(@RequestBody Elaborate elaborate) {
         try {
@@ -58,6 +62,7 @@ public class ElaborateController {
     }
 
     @Operation(summary = "Elimina un elaborato per ID")
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteElaborateById(@PathVariable Long id) {
         try {

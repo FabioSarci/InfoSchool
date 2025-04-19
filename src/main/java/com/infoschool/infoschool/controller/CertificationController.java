@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class CertificationController {
     }
 
     @Operation(summary = "Aggiungi una nuova certificazione")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addCertification(@RequestBody Certification certification) {
         try {
@@ -33,6 +35,7 @@ public class CertificationController {
     }
 
     @Operation(summary = "Ottieni una certificazione per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getCertificationById(@PathVariable Long id) {
         try {
@@ -47,6 +50,7 @@ public class CertificationController {
     }
 
     @Operation(summary = "Ottieni una certificazione per nome")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getCertificationByName(@PathVariable String name) {
         try {
@@ -61,6 +65,7 @@ public class CertificationController {
     }
 
     @Operation(summary = "Modifica una certificazione")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> editCertification(@RequestBody Certification certification) {
         try {
@@ -72,6 +77,7 @@ public class CertificationController {
     }
 
     @Operation(summary = "Elimina una certificazione per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCertificationById(@PathVariable Long id) {
         try {

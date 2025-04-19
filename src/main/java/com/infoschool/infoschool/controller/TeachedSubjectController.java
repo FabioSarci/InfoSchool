@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class TeachedSubjectController {
     }
 
     @Operation(summary = "Aggiungi una nuova materia insegnata")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addTeachedSubject(@RequestBody TeachedSubject teachedSubject) {
         try {
@@ -35,6 +37,7 @@ public class TeachedSubjectController {
     }
 
     @Operation(summary = "Modifica una materia insegnata")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> updateTeachedSubject(@RequestBody TeachedSubject teachedSubject) {
         try {
@@ -46,6 +49,7 @@ public class TeachedSubjectController {
     }
 
     @Operation(summary = "Elimina una materia insegnata per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTeachedSubjectById(@PathVariable Long id) {
         try {
@@ -57,6 +61,7 @@ public class TeachedSubjectController {
     }
 
     @Operation(summary = "Ottieni una materia insegnata per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findTeachedSubjectById(@PathVariable Long id) {
         try {
@@ -68,6 +73,7 @@ public class TeachedSubjectController {
     }
 
     @Operation(summary = "Ottieni tutte le materie insegnate")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('USER')")
     @GetMapping
     public ResponseEntity<?> findAllTeachedSubjects() {
         try {
@@ -79,6 +85,7 @@ public class TeachedSubjectController {
     }
 
     @Operation(summary = "Ottieni tutte le materie insegnate da un insegnante")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('USER')")
     @GetMapping("/teacher/{teacherId}")
     public ResponseEntity<?> findTeachedSubjectsByTeacherId(@PathVariable Long teacherId) {
         try {
@@ -90,6 +97,7 @@ public class TeachedSubjectController {
     }
 
     @Operation(summary = "Ottieni tutte le materie insegnate per ID della materia")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('USER')")
     @GetMapping("/subject/{subjectId}")
     public ResponseEntity<?> findTeachedSubjectsBySubjectId(@PathVariable Long subjectId) {
         try {

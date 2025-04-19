@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class RoleController {
     }
 
     @Operation(summary = "Aggiungi un nuovo ruolo")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addRole(@RequestBody Role role) {
         try {
@@ -39,6 +41,7 @@ public class RoleController {
     }
 
     @Operation(summary = "Ottieni un ruolo per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getRoleById(@PathVariable Long id) {
         try {
@@ -53,6 +56,7 @@ public class RoleController {
     }
 
     @Operation(summary = "Modifica un ruolo")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> editRole(@RequestBody Role role) {
         try {
@@ -67,6 +71,7 @@ public class RoleController {
     }
 
     @Operation(summary = "Elimina un ruolo per ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRoleById(@PathVariable Long id) {
         try {
@@ -78,6 +83,7 @@ public class RoleController {
     }
 
     @Operation(summary = "Ottieni un ruolo per nome")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getRoleByName(@PathVariable ERole name) {
         try {

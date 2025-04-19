@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Aggiungi un nuovo progetto")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     @PostMapping
     public ResponseEntity<?> addProject(@RequestBody Project project) {
         try {
@@ -35,6 +37,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Ottieni un progetto per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getProjectById(@PathVariable Long id) {
         try {
@@ -49,6 +52,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Modifica un progetto")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     @PutMapping
     public ResponseEntity<?> editProject(@RequestBody Project project) {
         try {
@@ -60,6 +64,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Elimina un progetto per ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProjectById(@PathVariable Long id) {
         try {
@@ -71,6 +76,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Ottieni tutti i progetti associati a un corso")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('USER')")
     @GetMapping("/course/{courseId}")
     public ResponseEntity<?> getProjectsByCourseId(@PathVariable Long courseId) {
         try {
