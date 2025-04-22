@@ -1,5 +1,6 @@
 package com.infoschool.infoschool.util.services;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +31,7 @@ public class UserDetailsImpl implements UserDetails {
 
   private String surname;
   private String address;
-  private String birthDate;
+  private LocalDate birthDate;
 
   private Collection<? extends GrantedAuthority> authorities;
 

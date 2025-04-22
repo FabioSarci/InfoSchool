@@ -1,6 +1,8 @@
 package com.infoschool.infoschool.dto.request;
 
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,10 +23,11 @@ public class SignupRequest {
     private String name;
     @NotBlank
     private String surname;
-    @NotBlank
+
     private String address;
+    
     @NotBlank
-    private String birthDate;
+    private LocalDate birthDate;
     @NotBlank
     private String role;
 }

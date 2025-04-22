@@ -84,12 +84,6 @@ public class AuthController {
     @Operation(summary = "Registra l'utente nel database", description = "Restituisce il token e le credenziali")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        // Verifica se il nome utente è già in uso
-        if (userService.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
-        }
 
         // Verifica se l'email è già registrata
         if (userService.existsByEmail(signUpRequest.getEmail())) {
@@ -133,7 +127,7 @@ public class AuthController {
         }
 
         newUser.setRole(role);
-        userService.addUser(newUser);
+        userService.registerUser(newUser);
 
         // Autentica l'utente appena registrato
         Authentication authentication = authenticationManager.authenticate(

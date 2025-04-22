@@ -1,5 +1,6 @@
 package com.infoschool.infoschool.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -22,7 +23,7 @@ public class User {
     private String email;
     private String password;
     private String address;
-    private String birthDate;
+    private LocalDate birthDate;
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)

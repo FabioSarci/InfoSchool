@@ -82,6 +82,8 @@ public class WebSecurityConfig {
           // Permetti l'accesso senza autenticazione agli endpoint di autenticazione
           .requestMatchers(HttpMethod.POST,"/api/auth/signin").permitAll()
           .requestMatchers(HttpMethod.GET,"/api/auth/signin").permitAll()
+          .requestMatchers(HttpMethod.POST,"/api/auth/signup").permitAll()
+          .requestMatchers(HttpMethod.GET,"/api/auth/signup").permitAll()
   
           // Permetti l'accesso senza autenticazione agli endpoint di test
           .requestMatchers("/api/test/**").permitAll()

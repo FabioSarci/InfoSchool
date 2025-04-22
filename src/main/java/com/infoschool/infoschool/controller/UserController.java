@@ -1,6 +1,7 @@
 package com.infoschool.infoschool.controller;
 
-import com.infoschool.infoschool.dto.request.UserDtoForm;
+import com.infoschool.infoschool.dto.request.SignupRequest;
+import com.infoschool.infoschool.dto.request.UserDto;
 import com.infoschool.infoschool.dto.request.UserRegistrarionToCourseDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
 import com.infoschool.infoschool.model.User;
@@ -29,9 +30,14 @@ public class UserController {
     @Operation(summary = "Aggiungi un nuovo utente")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> addUser(@RequestBody UserDtoForm userDtoForm) {
+    public ResponseEntity<?> addUser(@RequestBody SignupRequest userRequest) {
         try {
-            User createdUser = userService.addUser(userDtoForm);
+            if (userService.existsByEmail(userRequest.getEmail())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Email is already in use!"));
+            }
+            User createdUser = userService.addUser(userRequest);
             return ResponseEntity.status(201).body(createdUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -41,7 +47,7 @@ public class UserController {
     @Operation(summary = "Modifica un utente")
     @PutMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
-    public ResponseEntity<?> editUser(@RequestBody UserDtoForm userDtoForm) {
+    public ResponseEntity<?> editUser(@RequestBody UserDto userDtoForm) {
         try {
             User updatedUser = userService.edit(userDtoForm);
             if (updatedUser == null) {
@@ -60,8 +66,10 @@ public class UserController {
         try {
             userService.deleteUserById(id);
             return ResponseEntity.ok(new MessageResponse("Utente eliminato con successo"));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Errore durante l'eliminazione dell'utente"));
         }
     }
 
@@ -82,8 +90,8 @@ public class UserController {
 
     @Operation(summary = "Ottieni un utente per email")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
-    @GetMapping("/email/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    @GetMapping("/email")
+    public ResponseEntity<?> getUserByEmail(@RequestParam String email) {
         try {
             Optional<User> user = userService.getUserByEmail(email);
             if (user.isEmpty()) {
