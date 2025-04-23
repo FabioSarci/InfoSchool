@@ -5,14 +5,19 @@ import com.infoschool.infoschool.dto.request.UserDto;
 import com.infoschool.infoschool.dto.request.UserRegistrarionToCourseDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
 import com.infoschool.infoschool.service.UserService;
+import com.infoschool.infoschool.util.services.export.CsvExportService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -20,11 +25,11 @@ import java.util.Optional;
 @Tag(name = "Users", description = "API per la gestione degli utenti")
 public class UserController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CsvExportService csvExportService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @Operation(summary = "Aggiungi un nuovo utente")
     @PreAuthorize("hasRole('ADMIN')")
@@ -112,5 +117,15 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
+    }
+
+    @Operation(summary = "Esporta gli utenti in formato CSV")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/export/csv")
+    public void exportUsersToCsv(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=users.csv");
+
+        csvExportService.exportUsersToCsv(response.getWriter());
     }
 }
