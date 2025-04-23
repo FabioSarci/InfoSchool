@@ -1,7 +1,8 @@
 package com.infoschool.infoschool.controller;
 
+import com.infoschool.infoschool.dto.request.TeachedSubjectRequestDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
-import com.infoschool.infoschool.model.TeachedSubject;
+import com.infoschool.infoschool.dto.response.TeachedSubjectResponseDto;
 import com.infoschool.infoschool.service.TeachedSubjectService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,9 @@ public class TeachedSubjectController {
     @Operation(summary = "Aggiungi una nuova materia insegnata")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> addTeachedSubject(@RequestBody TeachedSubject teachedSubject) {
+    public ResponseEntity<?> addTeachedSubject(@RequestBody TeachedSubjectRequestDto teachedSubject) {
         try {
-            TeachedSubject createdTeachedSubject = teachedSubjectService.add(teachedSubject);
+            TeachedSubjectResponseDto createdTeachedSubject = teachedSubjectService.add(teachedSubject);
             return ResponseEntity.status(201).body(createdTeachedSubject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -39,9 +40,9 @@ public class TeachedSubjectController {
     @Operation(summary = "Modifica una materia insegnata")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    public ResponseEntity<?> updateTeachedSubject(@RequestBody TeachedSubject teachedSubject) {
+    public ResponseEntity<?> updateTeachedSubject(@RequestBody TeachedSubjectRequestDto teachedSubject) {
         try {
-            TeachedSubject updatedTeachedSubject = teachedSubjectService.update(teachedSubject);
+            TeachedSubjectResponseDto updatedTeachedSubject = teachedSubjectService.update(teachedSubject);
             return ResponseEntity.ok(updatedTeachedSubject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -65,7 +66,7 @@ public class TeachedSubjectController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findTeachedSubjectById(@PathVariable Long id) {
         try {
-            TeachedSubject teachedSubject = teachedSubjectService.findById(id);
+            TeachedSubjectResponseDto teachedSubject = teachedSubjectService.findById(id);
             return ResponseEntity.ok(teachedSubject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -77,7 +78,7 @@ public class TeachedSubjectController {
     @GetMapping
     public ResponseEntity<?> findAllTeachedSubjects() {
         try {
-            List<TeachedSubject> teachedSubjects = teachedSubjectService.findAll();
+            List<TeachedSubjectResponseDto> teachedSubjects = teachedSubjectService.findAll();
             return ResponseEntity.ok(teachedSubjects);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -89,7 +90,7 @@ public class TeachedSubjectController {
     @GetMapping("/teacher/{teacherId}")
     public ResponseEntity<?> findTeachedSubjectsByTeacherId(@PathVariable Long teacherId) {
         try {
-            List<TeachedSubject> teachedSubjects = teachedSubjectService.findByTeacherId(teacherId);
+            List<TeachedSubjectResponseDto> teachedSubjects = teachedSubjectService.findByTeacherId(teacherId);
             return ResponseEntity.ok(teachedSubjects);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -101,7 +102,7 @@ public class TeachedSubjectController {
     @GetMapping("/subject/{subjectId}")
     public ResponseEntity<?> findTeachedSubjectsBySubjectId(@PathVariable Long subjectId) {
         try {
-            List<TeachedSubject> teachedSubjects = teachedSubjectService.findBySubjectId(subjectId);
+            List<TeachedSubjectResponseDto> teachedSubjects = teachedSubjectService.findBySubjectId(subjectId);
             return ResponseEntity.ok(teachedSubjects);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));

@@ -2,10 +2,18 @@ package com.infoschool.infoschool.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.infoschool.infoschool.dto.request.TeachedSubjectRequestDto;
+import com.infoschool.infoschool.dto.response.TeachedSubjectResponseDto;
+import com.infoschool.infoschool.mapper.TeachedSubjectMapper;
+import com.infoschool.infoschool.model.Subject;
 import com.infoschool.infoschool.model.TeachedSubject;
+import com.infoschool.infoschool.model.User;
+import com.infoschool.infoschool.repository.SubjectRepository;
 import com.infoschool.infoschool.repository.TeachedSubjectRepositiry;
+import com.infoschool.infoschool.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,13 +21,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TeachedSubjectService {
     
-    private final TeachedSubjectRepositiry teachedSubjectRepositiry;
+    @Autowired
+    private TeachedSubjectRepositiry teachedSubjectRepositiry;
 
-    public TeachedSubjectService(TeachedSubjectRepositiry teachedSubjectRepositiry) {
-        this.teachedSubjectRepositiry = teachedSubjectRepositiry;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
-    public TeachedSubject add(TeachedSubject teachedSubject) {
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private TeachedSubjectMapper teachedSubjectMapper;
+
+    public TeachedSubjectResponseDto add(TeachedSubjectRequestDto teachedSubject) {
         try {
             log.info("Adding TeachedSubject: {}", teachedSubject);
             if (teachedSubject.getStartDate() == null || teachedSubject.getEndDate() == null) {
@@ -28,32 +42,59 @@ public class TeachedSubjectService {
             if (teachedSubject.getStartDate().isAfter(teachedSubject.getEndDate())) {
                 throw new IllegalArgumentException("Start date cannot be after end date");
             }
-            if (teachedSubject.getTeacher() == null || teachedSubject.getSubject() == null) {
-                throw new IllegalArgumentException("Teacher and subject cannot be null");
-            }
-            return teachedSubjectRepositiry.save(teachedSubject);
+            User teacher = userRepository.findById(teachedSubject.getTeacherId())
+                    .orElseThrow(() -> new IllegalArgumentException("Teacher with this ID does not exist"));
+
+            Subject subject = subjectRepository.findById(teachedSubject.getSubjectId())
+                    .orElseThrow(() -> new IllegalArgumentException("Subject with this ID does not exist"));
+
+            TeachedSubject newTeachedSubject = new TeachedSubject();
+            newTeachedSubject = teachedSubjectMapper.toEntity(teachedSubject);
+            newTeachedSubject.setTeacher(teacher);
+            newTeachedSubject.setSubject(subject);
+            
+            teachedSubjectRepositiry.save(newTeachedSubject);
+
+            TeachedSubjectResponseDto responseDto = teachedSubjectMapper.toDto(newTeachedSubject);
+            responseDto.setTeacherName(teacher.getName() + " " + teacher.getSurname());
+            responseDto.setSubjectName(subject.getName());
+            return responseDto;
         } catch (Exception e) {
             log.error("Error adding TeachedSubject: {}", e.getMessage());
             throw new RuntimeException("Error adding TeachedSubject", e);
         }
     }
 
-    public TeachedSubject update(TeachedSubject teachedSubject) {
+    public TeachedSubjectResponseDto update(TeachedSubjectRequestDto teachedSubject) {
         try {
             log.info("Updating TeachedSubject: {}", teachedSubject);
-            if (teachedSubject.getId() == null) {
-                throw new IllegalArgumentException("ID cannot be null");
-            }
+
             if (teachedSubject.getStartDate() == null || teachedSubject.getEndDate() == null) {
                 throw new IllegalArgumentException("Start date and end date cannot be null");
-            }
-            if (teachedSubjectRepositiry.existsById(teachedSubject.getId())) {
-                throw new IllegalArgumentException("TeachedSubject with this ID does not exist");
             }
             if (teachedSubject.getStartDate().isAfter(teachedSubject.getEndDate())) {
                 throw new IllegalArgumentException("Start date cannot be after end date");
             }
-            return teachedSubjectRepositiry.save(teachedSubject);
+            User teacher = userRepository.findById(teachedSubject.getTeacherId())
+            .orElseThrow(() -> new IllegalArgumentException("Teacher with this ID does not exist"));
+    
+            Subject subject = subjectRepository.findById(teachedSubject.getSubjectId())
+            .orElseThrow(() -> new IllegalArgumentException("Subject with this ID does not exist"));
+
+            TeachedSubject existingTeachedSubject = teachedSubjectRepositiry.findById(teachedSubject.getId())
+            .orElseThrow(() -> new IllegalArgumentException("TeachedSubject with this ID does not exist"));
+            
+            existingTeachedSubject.setStartDate(teachedSubject.getStartDate());
+            existingTeachedSubject.setEndDate(teachedSubject.getEndDate());
+            existingTeachedSubject.setTeacher(teacher);
+            existingTeachedSubject.setSubject(subject);
+
+            teachedSubjectRepositiry.save(existingTeachedSubject);
+
+            TeachedSubjectResponseDto responseDto = teachedSubjectMapper.toDto(existingTeachedSubject);
+            responseDto.setSubjectName(subject.getName());
+            responseDto.setTeacherName(teacher.getName() + " " + teacher.getSurname());
+            return responseDto;
         } catch (Exception e) {
             log.error("Error updating TeachedSubject: {}", e.getMessage());
             throw new RuntimeException("Error updating TeachedSubject", e);
@@ -73,40 +114,71 @@ public class TeachedSubjectService {
         }
     }
 
-    public TeachedSubject findById(long id) {
+    public TeachedSubjectResponseDto findById(long id) {
         try {
             log.info("Finding TeachedSubject with ID: {}", id);
-            return teachedSubjectRepositiry.findById(id).orElseThrow(() -> new IllegalArgumentException("TeachedSubject with this ID does not exist"));
+            TeachedSubject teachedSubject = teachedSubjectRepositiry.findById(id).orElseThrow(() -> new IllegalArgumentException("TeachedSubject with this ID does not exist"));
+            TeachedSubjectResponseDto responseDto = teachedSubjectMapper.toDto(teachedSubject);
+            responseDto.setTeacherName(teachedSubject.getTeacher().getName() + " " + teachedSubject.getTeacher().getSurname());
+            responseDto.setSubjectName(teachedSubject.getSubject().getName());
+            return responseDto;
         } catch (Exception e) {
             log.error("Error finding TeachedSubject: {}", e.getMessage());
             throw new RuntimeException("Error finding TeachedSubject", e);
         }
     }
 
-    public List<TeachedSubject> findAll() {
+    public List<TeachedSubjectResponseDto> findAll() {
         try {
             log.info("Finding all TeachedSubjects");
-            return teachedSubjectRepositiry.findAll();
+            List<TeachedSubject> list = teachedSubjectRepositiry.findAll();
+            List<TeachedSubjectResponseDto> responseList = list.stream()
+                    .map(teachedSubject -> {
+                        TeachedSubjectResponseDto responseDto = teachedSubjectMapper.toDto(teachedSubject);
+                        responseDto.setTeacherName(teachedSubject.getTeacher().getName() + " " + teachedSubject.getTeacher().getSurname());
+                        responseDto.setSubjectName(teachedSubject.getSubject().getName());
+                        return responseDto;
+                    })
+                    .toList();
+            return responseList;
         } catch (Exception e) {
             log.error("Error finding all TeachedSubjects: {}", e.getMessage());
             throw new RuntimeException("Error finding all TeachedSubjects", e);
         }
     }
 
-    public List<TeachedSubject> findByTeacherId(Long teacherId) {
+    public List<TeachedSubjectResponseDto> findByTeacherId(Long teacherId) {
         try {
             log.info("Finding TeachedSubjects by teacher ID: {}", teacherId);
-            return teachedSubjectRepositiry.findByTeacherId(teacherId);
+            List<TeachedSubject> list = teachedSubjectRepositiry.findByTeacherId(teacherId);
+            List<TeachedSubjectResponseDto> responseList = list.stream()
+                    .map(teachedSubject -> {
+                        TeachedSubjectResponseDto responseDto = teachedSubjectMapper.toDto(teachedSubject);
+                        responseDto.setTeacherName(teachedSubject.getTeacher().getName() + " " + teachedSubject.getTeacher().getSurname());
+                        responseDto.setSubjectName(teachedSubject.getSubject().getName());
+                        return responseDto;
+                    })
+                    .toList();
+            return responseList;
         } catch (Exception e) {
             log.error("Error finding TeachedSubjects by teacher ID: {}", e.getMessage());
             throw new RuntimeException("Error finding TeachedSubjects by teacher ID", e);
         }
     }
 
-    public List<TeachedSubject> findBySubjectId(Long subjectId) {
+    public List<TeachedSubjectResponseDto> findBySubjectId(Long subjectId) {
         try {
             log.info("Finding TeachedSubjects by subject ID: {}", subjectId);
-            return teachedSubjectRepositiry.findBySubjectId(subjectId);
+            List<TeachedSubject> list = teachedSubjectRepositiry.findBySubjectId(subjectId);
+            List<TeachedSubjectResponseDto> responseList = list.stream()
+                    .map(teachedSubject -> {
+                        TeachedSubjectResponseDto responseDto = teachedSubjectMapper.toDto(teachedSubject);
+                        responseDto.setTeacherName(teachedSubject.getTeacher().getName() + " " + teachedSubject.getTeacher().getSurname());
+                        responseDto.setSubjectName(teachedSubject.getSubject().getName());
+                        return responseDto;
+                    })
+                    .toList();
+            return responseList;
         } catch (Exception e) {
             log.error("Error finding TeachedSubjects by subject ID: {}", e.getMessage());
             throw new RuntimeException("Error finding TeachedSubjects by subject ID", e);
