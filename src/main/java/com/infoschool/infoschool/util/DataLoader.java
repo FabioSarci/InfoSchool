@@ -6,9 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.infoschool.infoschool.model.Course;
 import com.infoschool.infoschool.model.Role;
+import com.infoschool.infoschool.model.Subject;
 import com.infoschool.infoschool.model.User;
 import com.infoschool.infoschool.repository.CourseRepository;
 import com.infoschool.infoschool.repository.RoleRepository;
+import com.infoschool.infoschool.repository.SubjectRepository;
 import com.infoschool.infoschool.repository.UserRepository;
 
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +25,9 @@ public class DataLoader implements CommandLineRunner {
 
   @Autowired
   private CourseRepository courseRepository;
+
+  @Autowired
+  private SubjectRepository subjectRepository;
 
   @Autowired
   private PasswordEncoder encoder;
@@ -76,6 +81,23 @@ public class DataLoader implements CommandLineRunner {
       course3.setCode("CS-2025");
       course3.setDescription("Corso di cyber security");
       courseRepository.save(course3);
+    }
+
+    if (subjectRepository.findAll().isEmpty()) {
+      Subject subject = new Subject();
+      subject.setName("React");
+      subject.setDescription("Materia di React JS");
+      subjectRepository.save(subject);
+
+      Subject subject2 = new Subject();
+      subject2.setName("Python");
+      subject2.setDescription("Materia di Python");
+      subjectRepository.save(subject2);
+
+      Subject subject3 = new Subject();
+      subject3.setName("Ingegneria del Software");
+      subject3.setDescription("Materia di ingegneria del software");
+      subjectRepository.save(subject3);
     }
   }
     

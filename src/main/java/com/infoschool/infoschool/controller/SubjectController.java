@@ -1,7 +1,8 @@
 package com.infoschool.infoschool.controller;
 
+import com.infoschool.infoschool.dto.request.SubjectDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
-import com.infoschool.infoschool.model.Subject;
+import com.infoschool.infoschool.dto.response.SubjectAssignedToCourseDto;
 import com.infoschool.infoschool.service.SubjectService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,9 @@ public class SubjectController {
     @Operation(summary = "Aggiungi una nuova materia")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> addSubject(@RequestBody Subject subject) {
+    public ResponseEntity<?> addSubject(@RequestBody SubjectDto subject) {
         try {
-            Subject createdSubject = subjectService.add(subject);
+            SubjectDto createdSubject = subjectService.add(subject);
             return ResponseEntity.status(201).body(createdSubject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -39,9 +40,9 @@ public class SubjectController {
     @Operation(summary = "Modifica una materia")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    public ResponseEntity<?> updateSubject(@RequestBody Subject subject) {
+    public ResponseEntity<?> updateSubject(@RequestBody SubjectDto subject) {
         try {
-            Subject updatedSubject = subjectService.update(subject);
+            SubjectDto updatedSubject = subjectService.update(subject);
             return ResponseEntity.ok(updatedSubject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -65,7 +66,7 @@ public class SubjectController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findSubjectById(@PathVariable Long id) {
         try {
-            Subject subject = subjectService.findById(id);
+            SubjectDto subject = subjectService.findById(id);
             if (subject == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -80,7 +81,7 @@ public class SubjectController {
     @GetMapping
     public ResponseEntity<?> findAllSubjects() {
         try {
-            List<Subject> subjects = subjectService.findAll();
+            List<SubjectDto> subjects = subjectService.findAll();
             return ResponseEntity.ok(subjects);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -89,14 +90,26 @@ public class SubjectController {
 
     @Operation(summary = "Ottieni una materia per nome")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
-    @GetMapping("/name/{name}")
-    public ResponseEntity<?> findSubjectByName(@PathVariable String name) {
+    @GetMapping("/by-name")
+    public ResponseEntity<?> findSubjectByName(@RequestParam String name) {
         try {
-            Subject subject = subjectService.findByName(name);
+            SubjectDto subject = subjectService.findByName(name);
             if (subject == null) {
                 return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(subject);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @Operation(summary = "Assegna una materia a un corso")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/assign")
+    public ResponseEntity<?> assignSubjectToCourse(@RequestParam Long subjectId, @RequestParam Long courseId) {
+        try {
+            SubjectAssignedToCourseDto assignedSubject = subjectService.assignSubjectToCourse(subjectId, courseId);
+            return ResponseEntity.ok(assignedSubject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
