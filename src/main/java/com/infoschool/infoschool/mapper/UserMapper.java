@@ -24,4 +24,20 @@ public class UserMapper {
 
         return userDto;
     }
+
+    public User dtoToUser(UserDto userDto) {
+        if (userDto == null) {
+            return null;
+        }
+
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        user.setEmail(userDto.getEmail());
+        user.setAddress(userDto.getAddress());
+        user.setBirthDate(userDto.getBirthDate());
+
+        return user;
+    }
 }

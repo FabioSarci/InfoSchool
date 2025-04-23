@@ -6,6 +6,7 @@ import com.infoschool.infoschool.dto.request.UserRegistrarionToCourseDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
 import com.infoschool.infoschool.service.UserService;
 import com.infoschool.infoschool.util.services.export.CsvExportService;
+import com.infoschool.infoschool.util.services.export.PdfGenerationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,11 +14,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 @RestController
@@ -29,6 +33,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private CsvExportService csvExportService;
+    @Autowired
+    private PdfGenerationService pdfGenerationService;
 
 
     @Operation(summary = "Aggiungi un nuovo utente")
@@ -127,5 +133,29 @@ public class UserController {
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=users.csv");
 
         csvExportService.exportUsersToCsv(response.getWriter());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{id}/export/pdf")
+    public ResponseEntity<?> exportStudentProfileToPdf(@PathVariable Long id) {
+        try {
+            UserDto student = userService.getUserById(id).orElseThrow(() -> new RuntimeException("Studente non trovato"));
+            String filePath = "student_profile_" + student.getId() + ".pdf";
+
+            pdfGenerationService.generateStudentProfilePdf(student, filePath);
+
+            File file = new File(filePath);
+            if (!file.exists()) {
+                return ResponseEntity.internalServerError().body("Errore nella generazione del file");
+            }
+
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(fileContent);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Errore: " + e.getMessage());
+        }
     }
 }
