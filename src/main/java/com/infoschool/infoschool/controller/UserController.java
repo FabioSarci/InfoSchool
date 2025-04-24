@@ -5,8 +5,8 @@ import com.infoschool.infoschool.dto.request.UserDto;
 import com.infoschool.infoschool.dto.request.UserRegistrarionToCourseDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
 import com.infoschool.infoschool.service.UserService;
-import com.infoschool.infoschool.util.services.export.CsvExportService;
-import com.infoschool.infoschool.util.services.export.PdfGenerationService;
+import com.infoschool.infoschool.service.export.CsvExportService;
+import com.infoschool.infoschool.service.export.PdfGenerationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

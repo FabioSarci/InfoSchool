@@ -1,4 +1,4 @@
-package com.infoschool.infoschool.util.services.export;
+package com.infoschool.infoschool.service.export;
 
 import com.infoschool.infoschool.dto.request.UserDto;
 import com.infoschool.infoschool.mapper.UserMapper;
