@@ -1,7 +1,8 @@
 package com.infoschool.infoschool.controller;
 
+import com.infoschool.infoschool.dto.request.ProjectRequestDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
-import com.infoschool.infoschool.model.Project;
+import com.infoschool.infoschool.dto.response.ProjectResponseDto;
 import com.infoschool.infoschool.service.ProjectService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,9 @@ public class ProjectController {
     @Operation(summary = "Aggiungi un nuovo progetto")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     @PostMapping
-    public ResponseEntity<?> addProject(@RequestBody Project project) {
+    public ResponseEntity<?> addProject(@RequestBody ProjectRequestDto project) {
         try {
-            Project createdProject = projectService.add(project);
+            ProjectResponseDto createdProject = projectService.add(project);
             return ResponseEntity.status(201).body(createdProject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -41,7 +42,7 @@ public class ProjectController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getProjectById(@PathVariable Long id) {
         try {
-            Project project = projectService.getById(id);
+            ProjectResponseDto project = projectService.getById(id);
             if (project == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -54,9 +55,9 @@ public class ProjectController {
     @Operation(summary = "Modifica un progetto")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     @PutMapping
-    public ResponseEntity<?> editProject(@RequestBody Project project) {
+    public ResponseEntity<?> editProject(@RequestBody ProjectRequestDto project) {
         try {
-            Project updatedProject = projectService.edit(project);
+            ProjectResponseDto updatedProject = projectService.edit(project);
             return ResponseEntity.ok(updatedProject);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -80,7 +81,7 @@ public class ProjectController {
     @GetMapping("/course/{courseId}")
     public ResponseEntity<?> getProjectsByCourseId(@PathVariable Long courseId) {
         try {
-            List<Project> projects = projectService.getByCourseId(courseId);
+            List<ProjectResponseDto> projects = projectService.getByCourseId(courseId);
             return ResponseEntity.ok(projects);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
