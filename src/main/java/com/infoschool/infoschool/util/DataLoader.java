@@ -7,11 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.infoschool.infoschool.model.Course;
+import com.infoschool.infoschool.model.Project;
 import com.infoschool.infoschool.model.Role;
 import com.infoschool.infoschool.model.Subject;
 import com.infoschool.infoschool.model.TeachedSubject;
 import com.infoschool.infoschool.model.User;
 import com.infoschool.infoschool.repository.CourseRepository;
+import com.infoschool.infoschool.repository.ProjectRepository;
 import com.infoschool.infoschool.repository.RoleRepository;
 import com.infoschool.infoschool.repository.SubjectRepository;
 import com.infoschool.infoschool.repository.TeachedSubjectRepositiry;
@@ -35,6 +37,9 @@ public class DataLoader implements CommandLineRunner {
 
   @Autowired
   private TeachedSubjectRepositiry teachedSubjectRepositiry;
+
+  @Autowired
+  private ProjectRepository projectRepository;
 
   @Autowired
   private PasswordEncoder encoder;
@@ -143,6 +148,39 @@ public class DataLoader implements CommandLineRunner {
       teachedSubject.setSubject(subject);
       teachedSubject.setTeacher(teacher);
       teachedSubjectRepositiry.save(teachedSubject);
+    }
+
+    if (projectRepository.findAll().isEmpty()) {
+      Course course = courseRepository.findByName("Sviluppo Web").get();
+      Course course2 = courseRepository.findByName("Sviluppo Software").get();
+      Course course3 = courseRepository.findByName("Cyber Security").get();
+
+      Project project = new Project();
+      project.setStartDate(LocalDate.of(2023, 1, 1));
+      project.setEndDate(LocalDate.of(2023, 6, 1));
+      project.setTitle("Progetto di React");
+      project.setDescription("Progetto di React JS");
+      project.setMax_evaluation(100);
+      project.setCourse(course);
+      projectRepository.save(project);
+
+      Project project2 = new Project();
+      project2.setStartDate(LocalDate.of(2023, 1, 1));
+      project2.setEndDate(LocalDate.of(2023, 6, 1));
+      project2.setTitle("Progetto di Python");
+      project2.setDescription("Progetto di Python");
+      project2.setMax_evaluation(100);
+      project2.setCourse(course2);
+      projectRepository.save(project2);
+
+      Project project3 = new Project();
+      project3.setStartDate(LocalDate.of(2023, 1, 1));
+      project3.setEndDate(LocalDate.of(2023, 6, 1));
+      project3.setTitle("Progetto di Cyber Security");
+      project3.setDescription("Progetto di Cyber Security");
+      project3.setMax_evaluation(100);
+      project3.setCourse(course3);
+      projectRepository.save(project3);
     }
   }
 }
