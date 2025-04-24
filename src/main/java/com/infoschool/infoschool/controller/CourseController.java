@@ -1,6 +1,9 @@
 package com.infoschool.infoschool.controller;
 
+import com.infoschool.infoschool.dto.request.CourseRequestDto;
+import com.infoschool.infoschool.dto.response.CourseResponseDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
+import com.infoschool.infoschool.mapper.CourseMapper;
 import com.infoschool.infoschool.model.Course;
 import com.infoschool.infoschool.service.CourseService;
 import com.infoschool.infoschool.service.export.ExcelExportService;
@@ -27,13 +30,15 @@ public class CourseController {
     private CourseService courseService;
     @Autowired
     private ExcelExportService excelExportService;
+    @Autowired
+    private CourseMapper courseMapper;
 
     @Operation(summary = "Aggiungi un nuovo corso")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> addCourse(@RequestBody Course course) {
+    public ResponseEntity<?> addCourse(@RequestBody CourseRequestDto course) {
         try {
-            Course createdCourse = courseService.add(course);
+            CourseResponseDto createdCourse = courseService.add(course);
             return ResponseEntity.status(201).body(createdCourse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -45,7 +50,7 @@ public class CourseController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getCourseById(@PathVariable Long id) {
         try {
-            Course course = courseService.getById(id);
+            CourseResponseDto course = courseService.getById(id);
             if (course == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -60,7 +65,7 @@ public class CourseController {
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getCourseByName(@PathVariable String name) {
         try {
-            Course course = courseService.getByName(name);
+            CourseResponseDto course = courseService.getByName(name);
             if (course == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -75,7 +80,7 @@ public class CourseController {
     @GetMapping("/name/{name}/year/{year}")
     public ResponseEntity<?> getCourseByNameAndYear(@PathVariable String name, @PathVariable int year) {
         try {
-            Course course = courseService.getByNameAndYear(name, year);
+            CourseResponseDto course = courseService.getByNameAndYear(name, year);
             if (course == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -88,9 +93,9 @@ public class CourseController {
     @Operation(summary = "Modifica un corso")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    public ResponseEntity<?> editCourse(@RequestBody Course course) {
+    public ResponseEntity<?> editCourse(@RequestBody CourseRequestDto course) {
         try {
-            Course updatedCourse = courseService.edit(course);
+            CourseResponseDto updatedCourse = courseService.edit(course);
             return ResponseEntity.ok(updatedCourse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -116,9 +121,15 @@ public class CourseController {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=courses.xlsx");
 
-        List<Course> courses = courseService.getAll();
+        List<CourseResponseDto> courses = courseService.getAll();
+        if (courses.isEmpty()) {
+            throw new IOException("Nessun corso trovato per l'esportazione.");
+        }
+        List<Course> coursesEntityList = courses.stream()
+                .map(courseMapper::courseResponseDtotoCourse)
+                .toList();
         try (var outputStream = response.getOutputStream()) {
-            excelExportService.exportCoursesAndSubjectsToExcel(outputStream, courses);
+            excelExportService.exportCoursesAndSubjectsToExcel(outputStream, coursesEntityList);
             outputStream.flush();
         } catch (Exception e) {
             throw new IOException("Errore durante l'esportazione in Excel: " + e.getMessage(), e);

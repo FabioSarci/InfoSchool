@@ -13,6 +13,7 @@ import com.infoschool.infoschool.mapper.UserMapper;
 import com.infoschool.infoschool.model.Course;
 import com.infoschool.infoschool.model.Role;
 import com.infoschool.infoschool.model.User;
+import com.infoschool.infoschool.repository.CourseRepository;
 import com.infoschool.infoschool.repository.RoleRepository;
 import com.infoschool.infoschool.repository.UserRepository;
 import com.infoschool.infoschool.util.ERole;
@@ -26,7 +27,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private CourseService courseService;
+    private CourseRepository courseRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
@@ -171,14 +172,14 @@ public class UserService {
 
     public UserDto registration(UserRegistrarionToCourseDto registration) {
         try {
-            Course course = courseService.getById(registration.getCourseId());
+            Course course = courseRepository.findById(registration.getCourseId()).orElse(null);
             if (course != null) {
                 User user = userRepository.findById(registration.getUserId())
                         .orElseThrow(() -> new RuntimeException("User not found"));
                 user.getCourses().add(course);
                 course.getStudents().add(user);
                 userRepository.save(user);
-                courseService.edit(course);
+                courseRepository.save(course);
 
                 UserDto userDto = userMapper.userToDto(user);
                 log.info("User {} registered to course {}", user.getName(), course.getName());

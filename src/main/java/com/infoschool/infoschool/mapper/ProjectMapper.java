@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 import com.infoschool.infoschool.dto.request.ProjectRequestDto;
 import com.infoschool.infoschool.dto.response.ProjectResponseDto;
 import com.infoschool.infoschool.model.Project;
-import com.infoschool.infoschool.service.CourseService;
+import com.infoschool.infoschool.repository.CourseRepository;
 
 @Component
 public class ProjectMapper {
 
     @Autowired
-    private CourseService courseService;
+    private CourseRepository courseRepository;
     
     public ProjectResponseDto projectToProjectDto(Project project) {
         if (project == null) {
@@ -47,7 +47,7 @@ public class ProjectMapper {
         project.setEndDate(projectDto.getEndDate());
         project.setMax_evaluation(projectDto.getMax_evaluation());
 
-        project.setCourse(courseService.getById(projectDto.getCourseId()));
+        project.setCourse(courseRepository.findById(projectDto.getCourseId()).orElse(null));
         if (project.getCourse() == null) {
             throw new RuntimeException("Course not found with ID: " + projectDto.getCourseId());
         }
