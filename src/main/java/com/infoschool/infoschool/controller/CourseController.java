@@ -3,10 +3,17 @@ package com.infoschool.infoschool.controller;
 import com.infoschool.infoschool.dto.response.MessageResponse;
 import com.infoschool.infoschool.model.Course;
 import com.infoschool.infoschool.service.CourseService;
+import com.infoschool.infoschool.service.export.ExcelExportService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +23,10 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Courses", description = "API per la gestione dei corsi")
 public class CourseController {
 
-    private final CourseService courseService;
-
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
-    }
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private ExcelExportService excelExportService;
 
     @Operation(summary = "Aggiungi un nuovo corso")
     @PreAuthorize("hasRole('ADMIN')")
@@ -100,6 +106,22 @@ public class CourseController {
             return ResponseEntity.ok(new MessageResponse("Corso eliminato con successo"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/export/excel")
+    public void exportCoursesToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=courses.xlsx");
+
+        List<Course> courses = courseService.getAll();
+        try (var outputStream = response.getOutputStream()) {
+            excelExportService.exportCoursesAndSubjectsToExcel(outputStream, courses);
+            outputStream.flush();
+        } catch (Exception e) {
+            throw new IOException("Errore durante l'esportazione in Excel: " + e.getMessage(), e);
         }
     }
 }

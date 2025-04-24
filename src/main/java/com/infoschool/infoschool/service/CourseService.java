@@ -1,5 +1,7 @@
 package com.infoschool.infoschool.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.infoschool.infoschool.model.Course;
@@ -86,6 +88,16 @@ public class CourseService {
         } catch (Exception e) {
             log.error("Error editing course: {}", course, e);
             throw new RuntimeException("Error editing course: " + e.getMessage(), e);
+        }
+    }
+
+    public List<Course> getAll() {
+        try {
+            log.info("Fetching all courses");
+            return courseRepository.findAll();
+        } catch (Exception e) {
+            log.error("Error fetching all courses", e);
+            throw new RuntimeException("Error fetching all courses: " + e.getMessage(), e);
         }
     }
 }
