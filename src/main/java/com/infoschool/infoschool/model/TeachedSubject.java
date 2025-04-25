@@ -2,6 +2,9 @@ package com.infoschool.infoschool.model;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,8 +28,10 @@ public class TeachedSubject {
     private LocalDate endDate;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Subject subject;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User teacher;
 }

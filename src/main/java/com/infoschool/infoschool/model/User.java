@@ -3,6 +3,9 @@ package com.infoschool.infoschool.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +30,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Role role;
 
     @ManyToMany

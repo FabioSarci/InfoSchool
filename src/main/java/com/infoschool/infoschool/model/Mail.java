@@ -2,6 +2,9 @@ package com.infoschool.infoschool.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,9 +31,15 @@ public class Mail {
     private String attachment;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User sender;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User receiver;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private AttachmentType attachmentType;
 
 }
