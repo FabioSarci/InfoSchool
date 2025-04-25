@@ -1,18 +1,23 @@
 package com.infoschool.infoschool.util;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.infoschool.infoschool.model.Course;
+import com.infoschool.infoschool.model.Elaborate;
+import com.infoschool.infoschool.model.Mail;
 import com.infoschool.infoschool.model.Project;
 import com.infoschool.infoschool.model.Role;
 import com.infoschool.infoschool.model.Subject;
 import com.infoschool.infoschool.model.TeachedSubject;
 import com.infoschool.infoschool.model.User;
 import com.infoschool.infoschool.repository.CourseRepository;
+import com.infoschool.infoschool.repository.ElaborateRepository;
+import com.infoschool.infoschool.repository.MailRepository;
 import com.infoschool.infoschool.repository.ProjectRepository;
 import com.infoschool.infoschool.repository.RoleRepository;
 import com.infoschool.infoschool.repository.SubjectRepository;
@@ -40,6 +45,12 @@ public class DataLoader implements CommandLineRunner {
 
   @Autowired
   private ProjectRepository projectRepository;
+
+  @Autowired
+  private MailRepository mailRepository;
+
+  @Autowired
+  private ElaborateRepository elaborateRepository;
 
   @Autowired
   private PasswordEncoder encoder;
@@ -156,8 +167,8 @@ public class DataLoader implements CommandLineRunner {
       Course course3 = courseRepository.findByName("Cyber Security").get();
 
       Project project = new Project();
-      project.setStartDate(LocalDate.of(2023, 1, 1));
-      project.setEndDate(LocalDate.of(2023, 6, 1));
+      project.setStartDate(LocalDate.of(2025, 1, 1));
+      project.setEndDate(LocalDate.of(2025, 6, 1));
       project.setTitle("Progetto di React");
       project.setDescription("Progetto di React JS");
       project.setMax_evaluation(100);
@@ -165,8 +176,8 @@ public class DataLoader implements CommandLineRunner {
       projectRepository.save(project);
 
       Project project2 = new Project();
-      project2.setStartDate(LocalDate.of(2023, 1, 1));
-      project2.setEndDate(LocalDate.of(2023, 6, 1));
+      project2.setStartDate(LocalDate.of(2025, 1, 1));
+      project2.setEndDate(LocalDate.of(2025, 6, 1));
       project2.setTitle("Progetto di Python");
       project2.setDescription("Progetto di Python");
       project2.setMax_evaluation(100);
@@ -174,13 +185,71 @@ public class DataLoader implements CommandLineRunner {
       projectRepository.save(project2);
 
       Project project3 = new Project();
-      project3.setStartDate(LocalDate.of(2023, 1, 1));
-      project3.setEndDate(LocalDate.of(2023, 6, 1));
+      project3.setStartDate(LocalDate.of(2025, 1, 1));
+      project3.setEndDate(LocalDate.of(2025, 6, 1));
       project3.setTitle("Progetto di Cyber Security");
       project3.setDescription("Progetto di Cyber Security");
       project3.setMax_evaluation(100);
       project3.setCourse(course3);
       projectRepository.save(project3);
+    }
+
+    if (mailRepository.findAll().isEmpty()) {
+      User admin = userRepository.findByEmail("admin@admin.com").get();
+      User teacher = userRepository.findByEmail("mario@rossi.com").get();
+      User user = userRepository.findByEmail("mattia@verdi.com").get();
+
+      Mail mail = new Mail();
+      mail.setSubject("Progetto di React");
+      mail.setMessage("Ciao, il tuo progetto di React è stato approvato.");
+      mail.setSender(admin);
+      mail.setReceiver(user);
+      mail.setSentAt(LocalDateTime.now());
+
+      Mail mail2 = new Mail();
+      mail2.setSubject("Progetto di Python");
+      mail2.setMessage("Ciao, il tuo progetto di Python è stato approvato.");
+      mail2.setSender(teacher);
+      mail2.setReceiver(user);
+      mail2.setSentAt(LocalDateTime.now());
+
+      Mail mail3 = new Mail();
+      mail3.setSubject("Lettera di licwenziamento");
+      mail3.setMessage("Ciao, sei stato licenziato.");
+      mail3.setSender(admin);
+      mail3.setReceiver(teacher);
+      mail3.setSentAt(LocalDateTime.now());
+
+      mailRepository.save(mail);
+      mailRepository.save(mail2);
+      mailRepository.save(mail3);
+    }
+
+    if (elaborateRepository.findAll().isEmpty()) {
+      User user = userRepository.findByEmail("mattia@bianchi.com").get();
+      
+      Project project = projectRepository.findByName("Progetto di Cyber Security").get();
+
+      Elaborate elaborate = new Elaborate();
+      elaborate.setTitle("Elaborato di Cyber Security");
+      elaborate.setComment("Elaborato di Cyber Security eccellente");
+      elaborate.setEvaluation(100);
+      elaborate.setPostedAt(LocalDateTime.of(2025, 3, 25, 10, 0));
+      elaborate.setStudent(user);
+      elaborate.setProject(project);
+
+      Project project2 = projectRepository.findByName("Progetto di React").get();
+
+      Elaborate elaborate2 = new Elaborate();
+      elaborate2.setTitle("Elaborato di React");
+      elaborate2.setComment("Elaborato di React eccellente");
+      elaborate2.setEvaluation(100);
+      elaborate2.setPostedAt(LocalDateTime.of(2025, 5, 25, 10, 0));
+      elaborate2.setStudent(user);
+      elaborate2.setProject(project2);
+
+      elaborateRepository.save(elaborate);
+      elaborateRepository.save(elaborate2);
     }
   }
 }

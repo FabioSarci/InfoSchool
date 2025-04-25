@@ -24,6 +24,7 @@ public class Elaborate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
     private LocalDateTime postedAt;
     private String comment;
     private int evaluation;
