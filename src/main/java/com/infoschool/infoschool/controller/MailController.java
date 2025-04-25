@@ -1,7 +1,8 @@
 package com.infoschool.infoschool.controller;
 
+import com.infoschool.infoschool.dto.request.MailRequestDto;
+import com.infoschool.infoschool.dto.response.MailResponseDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
-import com.infoschool.infoschool.model.Mail;
 import com.infoschool.infoschool.service.MailService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,9 @@ public class MailController {
     @Operation(summary = "Invia una nuova mail")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('TEACHER')")
     @PostMapping
-    public ResponseEntity<?> sendMail(@RequestBody Mail mail) {
+    public ResponseEntity<?> sendMail(@RequestBody MailRequestDto mail) {
         try {
-            Mail sentMail = mailService.send(mail);
+            MailResponseDto sentMail = mailService.send(mail);
             return ResponseEntity.status(201).body(sentMail);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -41,7 +42,7 @@ public class MailController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getMailById(@PathVariable Long id) {
         try {
-            Mail mail = mailService.getById(id);
+            MailResponseDto mail = mailService.getById(id);
             if (mail == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -68,7 +69,7 @@ public class MailController {
     @GetMapping("/sender/{senderId}")
     public ResponseEntity<?> getMailsBySenderId(@PathVariable Long senderId) {
         try {
-            List<Mail> mails = mailService.getBySenderId(senderId);
+            List<MailResponseDto> mails = mailService.getBySenderId(senderId);
             return ResponseEntity.ok(mails);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -80,7 +81,7 @@ public class MailController {
     @GetMapping("/receiver/{receiverId}")
     public ResponseEntity<?> getMailsByReceiverId(@PathVariable Long receiverId) {
         try {
-            List<Mail> mails = mailService.getByReceiverId(receiverId);
+            List<MailResponseDto> mails = mailService.getByReceiverId(receiverId);
             return ResponseEntity.ok(mails);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -92,7 +93,7 @@ public class MailController {
     @GetMapping
     public ResponseEntity<?> getAllMails() {
         try {
-            List<Mail> mails = mailService.getAll();
+            List<MailResponseDto> mails = mailService.getAll();
             return ResponseEntity.ok(mails);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -104,7 +105,7 @@ public class MailController {
     @GetMapping("/sender/{senderId}/receiver/{receiverId}")
     public ResponseEntity<?> getMailsBySenderIdAndReceiverId(@PathVariable Long senderId, @PathVariable Long receiverId) {
         try {
-            List<Mail> mails = mailService.getBySenderIdAndReceiverId(senderId, receiverId);
+            List<MailResponseDto> mails = mailService.getBySenderIdAndReceiverId(senderId, receiverId);
             return ResponseEntity.ok(mails);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
