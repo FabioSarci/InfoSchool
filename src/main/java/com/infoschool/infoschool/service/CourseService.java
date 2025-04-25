@@ -75,7 +75,14 @@ public class CourseService {
     public void deleteById(Long id) {
         try {
             log.info("Deleting course by ID: {}", id);
-            courseRepository.deleteById(id);
+            Course course = courseRepository.findById(id).orElse(null);
+            if (course != null) {
+                courseRepository.delete(course);
+                log.info("Course deleted successfully: {}", course);
+            } else {
+                log.error("Course with ID {} not found", id);
+                throw new RuntimeException("Course not found");
+            }
         } catch (Exception e) {
             log.error("Error deleting course by ID: {}", id, e);
             throw new RuntimeException("Error deleting course by ID: " + e.getMessage(), e);

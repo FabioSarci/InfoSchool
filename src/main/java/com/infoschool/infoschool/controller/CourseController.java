@@ -62,8 +62,8 @@ public class CourseController {
 
     @Operation(summary = "Ottieni un corso per nome")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
-    @GetMapping("/name/{name}")
-    public ResponseEntity<?> getCourseByName(@PathVariable String name) {
+    @GetMapping("/name")
+    public ResponseEntity<?> getCourseByName(@RequestParam String name) {
         try {
             CourseResponseDto course = courseService.getByName(name);
             if (course == null) {
@@ -77,8 +77,8 @@ public class CourseController {
 
     @Operation(summary = "Ottieni un corso per nome e anno")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
-    @GetMapping("/name/{name}/year/{year}")
-    public ResponseEntity<?> getCourseByNameAndYear(@PathVariable String name, @PathVariable int year) {
+    @GetMapping("/name-year")
+    public ResponseEntity<?> getCourseByNameAndYear(@RequestParam String name, @RequestParam int year) {
         try {
             CourseResponseDto course = courseService.getByNameAndYear(name, year);
             if (course == null) {
