@@ -31,7 +31,7 @@ Controller → Service → Repository → Model
 ```
 
 **Descrizione livelli**:
-- **Controller**: gestisce le richieste HTTP.
+- **Controller**: gestisce le richieste HTTP. 
 - **Service**: contiene la logica di business.
 - **Repository**: accede al database con Spring Data JPA.
 - **Model**: entità del dominio.
