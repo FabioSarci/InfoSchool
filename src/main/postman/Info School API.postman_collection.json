@@ -1,0 +1,2088 @@
+{
+	"info": {
+		"_postman_id": "ffa1a0f6-55d4-4bb6-9e69-029452cf81d3",
+		"name": "Info School API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42844158"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"fabio@sarci.com\",\n  \"password\": \"password\",\n  \"name\": \"Fabio\",\n  \"surname\": \"Sarci\",\n  \"birthDate\": \"2005-01-25\",\n  \"role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Add User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzNDM2NzUsImV4cCI6MTc0NTQzMDA3NX0.I4wFEQujebMJKpbx3WZ0Bk5AyP37hKvcrOwUJ9mafcejlGfLDx65xbEcRqDI3welSvk_mW6uIcTmlTACkxrgZQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\",\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"birthDate\": \"2000-01-01\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzMTQ3ODQsImV4cCI6MTc0NTQwMTE4NH0.-VS_P2_XSBYmLbxgaC7RTSPS_iZOwUgyDuoyC-gA7oE6jhPA01IWws77z6pxcz5AR9lJSC-Z9J0MBDRU8dX2RQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Admin\",\n  \"surname\": \"Updated Admin\",\n  \"email\": \"updatedadmin@admin.com\",\n  \"address\": \"address\",\n  \"birthDate\": \"2005-01-25\",\n  \"roleId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzMTc0NzcsImV4cCI6MTc0NTQwMzg3N30.5NfpTTG36oQOYGXjbqIB9F0ImHhBZweH6fk5vXWtzTA7m_eNsR9yya8P2WooVwcUB0c2BQ0RdDty8QZZyTK2WQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzMTc0NzcsImV4cCI6MTc0NTQwMzg3N30.5NfpTTG36oQOYGXjbqIB9F0ImHhBZweH6fk5vXWtzTA7m_eNsR9yya8P2WooVwcUB0c2BQ0RdDty8QZZyTK2WQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzMTc0NzcsImV4cCI6MTc0NTQwMzg3N30.5NfpTTG36oQOYGXjbqIB9F0ImHhBZweH6fk5vXWtzTA7m_eNsR9yya8P2WooVwcUB0c2BQ0RdDty8QZZyTK2WQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/email?email=admin@admin.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "admin@admin.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User to Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzMTc0NzcsImV4cCI6MTc0NTQwMzg3N30.5NfpTTG36oQOYGXjbqIB9F0ImHhBZweH6fk5vXWtzTA7m_eNsR9yya8P2WooVwcUB0c2BQ0RdDty8QZZyTK2WQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"courseId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Csv",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDMzMDMsImV4cCI6MTc0NTQ4OTcwM30.fB2vL29zxP20mYQNgUJDLVjRtYrVMEdwu0Cis8vIn13qPJXSFeHPsY_83FxZoU9psVfvsAAIo7nn5Kk-O9sCRw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/export/csv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"export",
+								"csv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Pdf",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDcwOTEsImV4cCI6MTc0NTQ5MzQ5MX0.5IYbmu0brcKAvr1AyJH4WhIG9kv-yUl54Er6F2-XE3gUrgDmoUgULKPj-xioA06zLv_ABpF_0Q3Cp6wASM87BA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/users/6/export/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"users",
+								"6",
+								"export",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teached Subjects",
+			"item": [
+				{
+					"name": "Add Teached Subject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDE0MjMsImV4cCI6MTc0NTQ4NzgyM30.Uqv2ASKGhcyvnBz96kJIH2_BKIU2JbRuHLXz8qhKbR0ZDKdnKEp23mjd2BiUIaeqcCpbNHnrhVp7bBFEz6aerw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"teacherId\": 2,\n  \"subjectId\": 2,\n  \"startDate\": \"2023-10-01\",\n  \"endDate\": \"2024-06-30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/teached-subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"teached-subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Teached Subject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDE0MjMsImV4cCI6MTc0NTQ4NzgyM30.Uqv2ASKGhcyvnBz96kJIH2_BKIU2JbRuHLXz8qhKbR0ZDKdnKEp23mjd2BiUIaeqcCpbNHnrhVp7bBFEz6aerw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 2,\n  \"teacherId\": 2,\n  \"subjectId\": 2,\n  \"startDate\": \"2022-09-01\",\n  \"endDate\": \"2024-06-30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/teached-subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"teached-subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Teached Subject by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDE0MjMsImV4cCI6MTc0NTQ4NzgyM30.Uqv2ASKGhcyvnBz96kJIH2_BKIU2JbRuHLXz8qhKbR0ZDKdnKEp23mjd2BiUIaeqcCpbNHnrhVp7bBFEz6aerw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/teached-subjects/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"teached-subjects",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Teached Subject by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDE0MjMsImV4cCI6MTc0NTQ4NzgyM30.Uqv2ASKGhcyvnBz96kJIH2_BKIU2JbRuHLXz8qhKbR0ZDKdnKEp23mjd2BiUIaeqcCpbNHnrhVp7bBFEz6aerw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/teached-subjects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"teached-subjects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Teached Subjects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDE0MjMsImV4cCI6MTc0NTQ4NzgyM30.Uqv2ASKGhcyvnBz96kJIH2_BKIU2JbRuHLXz8qhKbR0ZDKdnKEp23mjd2BiUIaeqcCpbNHnrhVp7bBFEz6aerw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/teached-subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"teached-subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Teached Subjects by Teacher ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDE0MjMsImV4cCI6MTc0NTQ4NzgyM30.Uqv2ASKGhcyvnBz96kJIH2_BKIU2JbRuHLXz8qhKbR0ZDKdnKEp23mjd2BiUIaeqcCpbNHnrhVp7bBFEz6aerw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/teached-subjects/teacher/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"teached-subjects",
+								"teacher",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Teached Subjects by Subject ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0MDE0MjMsImV4cCI6MTc0NTQ4NzgyM30.Uqv2ASKGhcyvnBz96kJIH2_BKIU2JbRuHLXz8qhKbR0ZDKdnKEp23mjd2BiUIaeqcCpbNHnrhVp7bBFEz6aerw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/teached-subjects/subject/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"teached-subjects",
+								"subject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "Add Subject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzOTc1MTcsImV4cCI6MTc0NTQ4MzkxN30.J83VhngDLtH4WyRNlYihOHYCfFk2CPOBWb-omtoQEdS7bEmzw68OCONNyRP68AxY9IVUkJ7Q_VTldAcuyCgOfw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Java\",\n  \"description\": \"Basic Java course\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Subject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzOTc1MTcsImV4cCI6MTc0NTQ4MzkxN30.J83VhngDLtH4WyRNlYihOHYCfFk2CPOBWb-omtoQEdS7bEmzw68OCONNyRP68AxY9IVUkJ7Q_VTldAcuyCgOfw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 4,\n  \"name\": \"Java\",\n  \"description\": \"Advanced Java course\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subject by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzOTc1MTcsImV4cCI6MTc0NTQ4MzkxN30.J83VhngDLtH4WyRNlYihOHYCfFk2CPOBWb-omtoQEdS7bEmzw68OCONNyRP68AxY9IVUkJ7Q_VTldAcuyCgOfw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/subjects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"subjects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subject by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzOTc1MTcsImV4cCI6MTc0NTQ4MzkxN30.J83VhngDLtH4WyRNlYihOHYCfFk2CPOBWb-omtoQEdS7bEmzw68OCONNyRP68AxY9IVUkJ7Q_VTldAcuyCgOfw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/subjects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"subjects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Subjects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzOTc1MTcsImV4cCI6MTc0NTQ4MzkxN30.J83VhngDLtH4WyRNlYihOHYCfFk2CPOBWb-omtoQEdS7bEmzw68OCONNyRP68AxY9IVUkJ7Q_VTldAcuyCgOfw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subject by Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzOTc1MTcsImV4cCI6MTc0NTQ4MzkxN30.J83VhngDLtH4WyRNlYihOHYCfFk2CPOBWb-omtoQEdS7bEmzw68OCONNyRP68AxY9IVUkJ7Q_VTldAcuyCgOfw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/subjects/by-name?name=Java",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"subjects",
+								"by-name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Java"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Subject to a Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDUzOTc1MTcsImV4cCI6MTc0NTQ4MzkxN30.J83VhngDLtH4WyRNlYihOHYCfFk2CPOBWb-omtoQEdS7bEmzw68OCONNyRP68AxY9IVUkJ7Q_VTldAcuyCgOfw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/subjects/assign?subjectId=1&courseId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"subjects",
+								"assign"
+							],
+							"query": [
+								{
+									"key": "subjectId",
+									"value": "1"
+								},
+								{
+									"key": "courseId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Add Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"ROLE_USER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/roles/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"ROLE_ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/roles/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/roles/name/ROLE_USER",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"roles",
+								"name",
+								"ROLE_USER"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Add Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"startDate\": \"2025-05-01\",\n  \"endDate\": \"2025-06-30\",\n  \"title\": \"Progetto di Sviluppo Web\",\n  \"description\": \"Creazione di un'applicazione web full-stack.\",\n  \"max_evaluation\": 100,\n  \"courseId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/projects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"startDate\": \"2025-04-01\",\n  \"endDate\": \"2025-06-30\",\n  \"title\": \"Progetto di Sviluppo Web\",\n  \"description\": \"Creazione di un'applicazione web full-stack.\",\n  \"max_evaluation\": 100,\n  \"courseId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/projects/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Projects by Course ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/projects/course/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"projects",
+								"course",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mail",
+			"item": [
+				{
+					"name": "Send Mail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject\": \"Richiesta di informazioni\",\n  \"message\": \"Buongiorno, vorrei avere maggiori dettagli sul corso di sviluppo web.\",\n  \"senderEmail\": \"mario@rossi.com\",\n  \"receiverEmail\": \"matia@verdi.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/mails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"mails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mail by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/mails/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"mails",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Mail by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/mails/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"mails",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mails by Sender ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/mails/sender/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"mails",
+								"sender",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mails by Receiver ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/mails/receiver/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"mails",
+								"receiver",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Mails",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/mails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"mails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mails by Sender and Receiver ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/mails/sender/2/receiver/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"mails",
+								"sender",
+								"2",
+								"receiver",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Elaborates",
+			"item": [
+				{
+					"name": "Add Elaborate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXR0aWFAdmVyZGkuY29tIiwiaWF0IjoxNzQ1NTkxNjAwLCJleHAiOjE3NDU2NzgwMDB9.y8icTIOel3Olslhaenk0RaivBFYo7rJ12Sptb2BIlqE6-E0X28prPDFjCS2bTfmpbBO46N6PAFXxltVu2ZH5ww",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"New Elaborate\",\n  \"projectId\":\"2\",\n  \"studentId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/elaborates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"elaborates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Elaborate by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXR0aWFAdmVyZGkuY29tIiwiaWF0IjoxNzQ1NTkxNjAwLCJleHAiOjE3NDU2NzgwMDB9.y8icTIOel3Olslhaenk0RaivBFYo7rJ12Sptb2BIlqE6-E0X28prPDFjCS2bTfmpbBO46N6PAFXxltVu2ZH5ww",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/elaborates/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"elaborates",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Elaborate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXR0aWFAdmVyZGkuY29tIiwiaWF0IjoxNzQ1NTkxNjAwLCJleHAiOjE3NDU2NzgwMDB9.y8icTIOel3Olslhaenk0RaivBFYo7rJ12Sptb2BIlqE6-E0X28prPDFjCS2bTfmpbBO46N6PAFXxltVu2ZH5ww",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 3,\n  \"title\": \"Updated Elaborate\",\n  \"comment\": \"Updated Comment\",\n  \"evaluation\": 88\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/elaborates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"elaborates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Elaborate by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXR0aWFAdmVyZGkuY29tIiwiaWF0IjoxNzQ1NTkxNjAwLCJleHAiOjE3NDU2NzgwMDB9.y8icTIOel3Olslhaenk0RaivBFYo7rJ12Sptb2BIlqE6-E0X28prPDFjCS2bTfmpbBO46N6PAFXxltVu2ZH5ww",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/elaborates/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"elaborates",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Add Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Data Analist\",\n  \"year\": 2025,\n  \"description\": \"Basic data analist course\",\n  \"code\":\"DA-2025\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/courses/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course by Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/courses/name?name=Sviluppo Software",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Sviluppo Software"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course by Name and Year",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/courses/name-year?name=Sviluppo Software&year=2025",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses",
+								"name-year"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Sviluppo Software"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 4,\n  \"name\": \"Data Analist\",\n  \"year\": 2025,\n  \"description\": \"Advanced data analist course\",\n  \"code\":\"DA-2025\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU1NzU3ODIsImV4cCI6MTc0NTY2MjE4Mn0.7yPlm8Wmne0YhDdjeLLQNobVMQwRm7Qz5DyPY2-zmmlHVJq6p_VkEKSOoUecGKyijAK4UDUsa5dogXsaJ_wr9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/courses/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Courses by Year",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/courses/year/2025",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses",
+								"year",
+								"2025"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Excel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3NDU0ODY4NjQsImV4cCI6MTc0NTU3MzI2NH0.IjbOaaWl-ArL_Y_dri8R9u51Y-IHCP2_ni6o-Ml_eTL1cGkYZZz3wD6VHJa98eVpfUQA8PJn3TdZC46R_AXqAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/courses/export/excel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"courses",
+								"export",
+								"excel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Certifications",
+			"item": [
+				{
+					"name": "Add Certification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Certification Name\",\n  \"description\": \"Certification Description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/certifications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"certifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Certification by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/certifications/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"certifications",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Certification by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/certifications/name/CertificationName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"certifications",
+								"name",
+								"CertificationName"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Certification",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Certification Name\",\n  \"description\": \"Updated Certification Description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/certifications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"certifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Certification by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/certifications/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"certifications",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attachment Types",
+			"item": [
+				{
+					"name": "Add Attachment Type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Document\",\n  \"description\": \"A document attachment type\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/attachment-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"attachment-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Attachment Type by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/attachment-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"attachment-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Attachment Type by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/attachment-types/name/Document",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"attachment-types",
+								"name",
+								"Document"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Attachment Type",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Document\",\n  \"description\": \"Updated description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/attachment-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"attachment-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Attachment Type by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/attachment-types/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"attachment-types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
