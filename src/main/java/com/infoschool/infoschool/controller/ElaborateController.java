@@ -1,7 +1,8 @@
 package com.infoschool.infoschool.controller;
 
+import com.infoschool.infoschool.dto.request.ElaborateRequestDto;
+import com.infoschool.infoschool.dto.response.ElaborateResponseDto;
 import com.infoschool.infoschool.dto.response.MessageResponse;
-import com.infoschool.infoschool.model.Elaborate;
 import com.infoschool.infoschool.service.ElaborateService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,9 +26,9 @@ public class ElaborateController {
     @Operation(summary = "Aggiungi un nuovo elaborato")
     @PreAuthorize("hasRole('USER')")
     @PostMapping
-    public ResponseEntity<?> addElaborate(@RequestBody Elaborate elaborate) {
+    public ResponseEntity<?> addElaborate(@RequestBody ElaborateRequestDto elaborate) {
         try {
-            Elaborate createdElaborate = elaborateService.add(elaborate);
+            ElaborateResponseDto createdElaborate = elaborateService.add(elaborate);
             return ResponseEntity.status(201).body(createdElaborate);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -39,7 +40,7 @@ public class ElaborateController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getElaborateById(@PathVariable Long id) {
         try {
-            Elaborate elaborate = elaborateService.getById(id);
+            ElaborateResponseDto elaborate = elaborateService.getById(id);
             if (elaborate == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -50,11 +51,11 @@ public class ElaborateController {
     }
 
     @Operation(summary = "Modifica un elaborato")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('TEACHER') or hasRole('ADMIN')")
     @PutMapping
-    public ResponseEntity<?> editElaborate(@RequestBody Elaborate elaborate) {
+    public ResponseEntity<?> editElaborate(@RequestBody ElaborateRequestDto elaborate) {
         try {
-            Elaborate updatedElaborate = elaborateService.edit(elaborate);
+            ElaborateResponseDto updatedElaborate = elaborateService.edit(elaborate);
             return ResponseEntity.ok(updatedElaborate);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -62,7 +63,7 @@ public class ElaborateController {
     }
 
     @Operation(summary = "Elimina un elaborato per ID")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteElaborateById(@PathVariable Long id) {
         try {

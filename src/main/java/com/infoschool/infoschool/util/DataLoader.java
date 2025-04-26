@@ -101,7 +101,7 @@ public class DataLoader implements CommandLineRunner {
       user.setSurname("Verdi");
       user.setPassword(encoder.encode("password"));
       user.setRole(role2);
-      user.setEmail("matia@verdi.com");
+      user.setEmail("mattia@verdi.com");
       user.setAddress("Via Roma 1, Milano");
       user.setBirthDate(LocalDate.of(2004, 1, 1));
       userRepository.save(user);
@@ -226,9 +226,9 @@ public class DataLoader implements CommandLineRunner {
     }
 
     if (elaborateRepository.findAll().isEmpty()) {
-      User user = userRepository.findByEmail("mattia@bianchi.com").get();
+      User user = userRepository.findByEmail("mattia@verdi.com").get();
       
-      Project project = projectRepository.findByName("Progetto di Cyber Security").get();
+      Project project = projectRepository.findByTitle("Progetto di Cyber Security").get();
 
       Elaborate elaborate = new Elaborate();
       elaborate.setTitle("Elaborato di Cyber Security");
@@ -238,7 +238,7 @@ public class DataLoader implements CommandLineRunner {
       elaborate.setStudent(user);
       elaborate.setProject(project);
 
-      Project project2 = projectRepository.findByName("Progetto di React").get();
+      Project project2 = projectRepository.findByTitle("Progetto di React").get();
 
       Elaborate elaborate2 = new Elaborate();
       elaborate2.setTitle("Elaborato di React");

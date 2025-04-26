@@ -11,5 +11,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long>{
 
     List<Project> findByCourseId(Long courseId);
 
-    Optional<Project> findByName(String name);
+    Optional<Project> findByTitle(String title);
 }
