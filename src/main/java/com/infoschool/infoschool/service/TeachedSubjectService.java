@@ -35,29 +35,24 @@ public class TeachedSubjectService {
 
     public TeachedSubjectResponseDto add(TeachedSubjectRequestDto teachedSubject) {
         try {
-            log.info("Adding TeachedSubject: {}", teachedSubject);
+            log.info("Adding TeachedSubject: {}", teachedSubject.toString());
             if (teachedSubject.getStartDate() == null || teachedSubject.getEndDate() == null) {
                 throw new IllegalArgumentException("Start date and end date cannot be null");
             }
             if (teachedSubject.getStartDate().isAfter(teachedSubject.getEndDate())) {
                 throw new IllegalArgumentException("Start date cannot be after end date");
             }
-            User teacher = userRepository.findById(teachedSubject.getTeacherId())
-                    .orElseThrow(() -> new IllegalArgumentException("Teacher with this ID does not exist"));
 
-            Subject subject = subjectRepository.findById(teachedSubject.getSubjectId())
-                    .orElseThrow(() -> new IllegalArgumentException("Subject with this ID does not exist"));
-
-            TeachedSubject newTeachedSubject = new TeachedSubject();
-            newTeachedSubject = teachedSubjectMapper.toEntity(teachedSubject);
-            newTeachedSubject.setTeacher(teacher);
-            newTeachedSubject.setSubject(subject);
+            TeachedSubject newTeachedSubject = teachedSubjectMapper.toEntity(teachedSubject);
             
+            if(newTeachedSubject == null) {
+                throw new IllegalArgumentException("TeachedSubject cannot be null");
+            }
             teachedSubjectRepositiry.save(newTeachedSubject);
 
             TeachedSubjectResponseDto responseDto = teachedSubjectMapper.toDto(newTeachedSubject);
-            responseDto.setTeacherName(teacher.getName() + " " + teacher.getSurname());
-            responseDto.setSubjectName(subject.getName());
+            responseDto.setTeacherName(newTeachedSubject.getTeacher().getName() + " " + newTeachedSubject.getTeacher().getSurname());
+            responseDto.setSubjectName(newTeachedSubject.getSubject().getName());
             return responseDto;
         } catch (Exception e) {
             log.error("Error adding TeachedSubject: {}", e.getMessage());
